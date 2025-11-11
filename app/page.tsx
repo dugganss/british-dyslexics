@@ -1,8 +1,12 @@
 "use client";
 
 import Image from "next/image";
+import { Menu, ShoppingCart } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
+import ResourcesBox from "@/components/ResourcesBox";
+import MainHeader from "@/components/MainHeader";
+
 
 export default function Home() {
   const ref = useRef<HTMLElement | null>(null);
@@ -13,29 +17,20 @@ export default function Home() {
     offset: ["start end", "end start"],
   });
 
-  // Transform scroll into vertical lift of the white section
-  // tweak the -250 value to change how far the white section rises
-  const liftY = useTransform(scrollYProgress, [0, 1], [0, -270]);
+  const stepLiftY = useTransform(scrollYProgress, [0, 1], [0, -280]);
+  const resourceLiftY = useTransform(scrollYProgress, [0, 1], [15, -110]);
+  const imageLiftY = useTransform(scrollYProgress, [0, 1], [10, -130]);
 
-  // Title opacity (fade in as steps lift)
-  const titleOpacity = useTransform(scrollYProgress, [0.25, 0.55], [0, 1]);
+  /* Offsets for element fading */
+  const offsets = [0.35, 0.38, 0.50, 0.53];
+  const fadeDurations = 0.2;
+  const opacities = offsets.map( offset =>
+    useTransform(scrollYProgress, [offset, offset + fadeDurations], [0, 1])
+  )
 
   return (
     <main className="min-h-screen overflow-x-hidden" ref={ref}>
-      {/* Navbar */}
-      <nav className="flex justify-between items-center px-6 py-4 absolute top-0 left-0 w-full z-30">
-        <div className="flex items-end gap-3">
-          <Image src="/logo.png" alt="British Dyslexics Logo" width={44} height={44} />
-          <h1 className="text-2xl font-bold text-black">British Dyslexics</h1>
-        </div>
-
-        <div className="flex items-center gap-4 text-3xl cursor-pointer text-black">
-          <span aria-hidden>☰</span>
-          <span aria-hidden>🛒</span>
-        </div>
-      </nav>
-
-      {/* Hero Image (full viewport) */}
+      {/* Hero Image*/}
       <section className="relative w-full h-screen">
         <Image
           src="/child-reading.jpeg"
@@ -48,58 +43,71 @@ export default function Home() {
 
       {/* Rising White Section with stepped top edge */}
       <motion.section
-        style={{ y: liftY }}
+        style={{ y: stepLiftY }}
         className="relative bg-white min-h-[100vh] z-20"
       >
-        {/* SVG Steps (steeper, increasing height right -> left) */}
+        {/* SVG Steps */}
         <div className="absolute -top-[90px] left-0 w-full overflow-hidden pointer-events-none">
           <svg
-  viewBox="0 0 1440 100"
-  xmlns="http://www.w3.org/2000/svg"
-  className="w-full h-[100px]"
-  preserveAspectRatio="none"
->
-  <path
-    d="
-      M0,100
-      L0,82
-      L288,82
-      L288,65
-      L576,65
-      L576,45
-      L864,45
-      L864,25
-      L1152,25
-      L1152,5
-      L1440,5
-      L1440,100
-      Z
-    "
-    fill="white"
-  />
-</svg>
+            viewBox="0 0 1440 100"
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-full h-[110px]"
+            preserveAspectRatio="none"
+          >
+            <path d="M0,100 L0,82 L288,82 L288,65 L576,65 L576,45 L864,45 L864,25 L1152,25 L1152,5 L1440,5 L1440,100 Z"
+              fill="white"
+            />
+          </svg>
 
         </div>
 
-        {/* Content container */}
-        <div className="max-w-6xl mx-auto px-10 pt-36 pb-20">
-          {/* Left-aligned title */}
-          <motion.div style={{ opacity: titleOpacity }} className="max-w-[480px]">
-            <h2 className="text-4xl sm:text-5xl font-bold mb-4 text-black">What We Do.</h2>
-            <p className="text-lg text-gray-700 leading-relaxed">
-              We empower individuals with dyslexia by providing support, resources,
-              and community across the UK. Our programmes focus on awareness,
-              practical tools, and confidence-building.
-            </p>
-          </motion.div>
-
-          {/* Placeholder right content to match screenshot layout */}
-          <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-6">
-            <div className="col-span-2">
-              <div className="w-full h-60 bg-gray-200 rounded-lg" />
+        {/* Main body */}
+        <div className="max-w-6xl mx-auto px-10 pt-36 pb-20 ">
+          
+          {/* What we do and resources */}
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+            <div>
+                <motion.div style={{ opacity: opacities[0] }} className="max-w-[480px]">
+                  <MainHeader text={"What We Do."}/>
+                  <p className="text-lg text-gray-700 leading-relaxed max-w-md mb-5">
+                    We empower individuals with dyslexia by providing support, resources,
+                    and community across the UK. Our programmes focus on awareness,
+                    practical tools, and confidence-building.
+                  </p>
+              </motion.div>
             </div>
-            <div className="col-span-1">
-              <div className="w-full h-52 bg-gray-200 rounded-lg" />
+            
+            <div className="mt-10 max-[1023px]:ml-50 max-[767px]:ml-0">
+              <motion.div style={{ opacity: opacities[1], y: resourceLiftY}} >
+                <ResourcesBox />
+              </motion.div>
+            </div>
+          </div>
+
+          {/* Help Our Charity */}
+          <div className="mt-15">
+            <motion.div style={{opacity: opacities[2]}}>
+              <MainHeader text={"Help Our Charity."}/>
+            </motion.div>
+            
+            <div className="flex flex-col lg:flex-row gap-4 justify-between items-center mt-8 min-[1300px]:-ml-20">
+              <motion.div style={{opacity: opacities[3], y: imageLiftY}}>
+                <Image 
+                  src="/child-learning.png"
+                  alt="Child Learning"
+                  width={600}
+                  height={600}
+                  className="object-cover mt-20"
+                />
+              </motion.div>
+
+              <motion.div style={{opacity: opacities[3]}}>
+                <p className="text-lg text-gray-700 leading-relaxed mb-5 -mt-20 max-w-full lg:max-w-md mx-auto text-center lg:text-left lg:mr-5">
+                  Please donate or buy something from the charity to support us, there are some
+                  other ways that you can support us even just by reading a few of our resources
+                  and educate yourself on dyslexia.
+                </p>
+              </motion.div>
             </div>
           </div>
         </div>
