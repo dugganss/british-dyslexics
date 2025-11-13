@@ -5,7 +5,7 @@ import { Menu, ShoppingCart } from "lucide-react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import ResourcesBox from "@/components/ResourcesBox";
-import MainHeader from "@/components/MainHeader";
+import MainTitle from "@/components/MainTitle";
 
 
 export default function Home() {
@@ -22,7 +22,7 @@ export default function Home() {
   const imageLiftY = useTransform(scrollYProgress, [0, 1], [10, -130]);
 
   /* Offsets for element fading */
-  const offsets = [0.35, 0.38, 0.50, 0.53];
+  const offsets = [0.28, 0.31, 0.34, 0.46, 0.49];
   const fadeDurations = 0.2;
   const opacities = offsets.map( offset =>
     useTransform(scrollYProgress, [offset, offset + fadeDurations], [0, 1])
@@ -33,7 +33,7 @@ export default function Home() {
       {/* Hero Image*/}
       <section className="relative w-full h-screen">
         <Image
-          src="/child-reading.jpeg"
+          src="/child-learning.png"
           alt="Child reading"
           fill
           priority
@@ -41,7 +41,7 @@ export default function Home() {
         />
       </section>
 
-      {/* Rising White Section with stepped top edge */}
+      {/* Rising White Steps */}
       <motion.section
         style={{ y: stepLiftY }}
         className="relative bg-white min-h-[100vh] z-20"
@@ -68,17 +68,19 @@ export default function Home() {
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
             <div>
                 <motion.div style={{ opacity: opacities[0] }} className="max-w-[480px]">
-                  <MainHeader text={"What We Do."}/>
+                  <MainTitle text={"What We Do."}/>
+                </motion.div>
+                <motion.div style={{ opacity: opacities[1] }} className="max-w-[480px]">
                   <p className="text-lg text-gray-700 leading-relaxed max-w-md mb-5">
                     We empower individuals with dyslexia by providing support, resources,
                     and community across the UK. Our programmes focus on awareness,
                     practical tools, and confidence-building.
                   </p>
-              </motion.div>
+                </motion.div>
             </div>
             
             <div className="mt-10 max-[1023px]:ml-50 max-[767px]:ml-0">
-              <motion.div style={{ opacity: opacities[1], y: resourceLiftY}} >
+              <motion.div style={{ opacity: opacities[2], y: resourceLiftY}} >
                 <ResourcesBox />
               </motion.div>
             </div>
@@ -86,14 +88,14 @@ export default function Home() {
 
           {/* Help Our Charity */}
           <div className="mt-15">
-            <motion.div style={{opacity: opacities[2]}}>
-              <MainHeader text={"Help Our Charity."}/>
+            <motion.div style={{opacity: opacities[3]}}>
+              <MainTitle text={"Help Our Charity."}/>
             </motion.div>
             
-            <div className="flex flex-col lg:flex-row gap-4 justify-between items-center mt-8 min-[1300px]:-ml-20">
-              <motion.div style={{opacity: opacities[3], y: imageLiftY}}>
+            <div className="flex flex-col lg:flex-row gap-4 justify-between items-center mt-9 min-[1300px]:-ml-20">
+              <motion.div style={{opacity: opacities[4], y: imageLiftY}}>
                 <Image 
-                  src="/child-learning.png"
+                  src="/hero.png"
                   alt="Child Learning"
                   width={600}
                   height={600}
@@ -101,7 +103,7 @@ export default function Home() {
                 />
               </motion.div>
 
-              <motion.div style={{opacity: opacities[3]}}>
+              <motion.div style={{opacity: opacities[4]}}>
                 <p className="text-lg text-gray-700 leading-relaxed mb-5 -mt-20 max-w-full lg:max-w-md mx-auto text-center lg:text-left lg:mr-5">
                   Please donate or buy something from the charity to support us, there are some
                   other ways that you can support us even just by reading a few of our resources
