@@ -1,32 +1,29 @@
+import Logo from "./Logo";
+import { navItems } from "@/app/config/navigation";
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-200 border-t border-gray-300 py-10 mt-10">
-      <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+    <footer className="bg-white border-t border-gray-300 py-10 mt-10">
+      <div className="max-w-6xl mx-auto px-6 flex flex-col lg:flex-row items-center justify-between gap-6 text-center md:text-left">
         {/* Left section */}
-        <div>
-          <h3 className="text-xl font-semibold text-gray-900">
-            British Dyslexics
-          </h3>
-          <p className="text-gray-700 mt-2 max-w-xs mx-auto md:mx-0">
+        <div className="flex flex-row gap-4">
+          <Logo></Logo>
+          <p className="text-gray-700 mt-2 max-w-xs mx-auto md:mx-0 italic">
             Helping parents help their children since 1996.
           </p>
         </div>
 
         {/* Center navigation links */}
-        <div className="flex flex-col md:flex-row gap-3 md:gap-6 text-gray-800 justify-center items-center">
-          <a href="#what-we-do" className="hover:text-black transition">
-            What We Do
-          </a>
-          <a href="#resources" className="hover:text-black transition">
-            Resources
-          </a>
-          <a href="#donate" className="hover:text-black transition">
-            Donate
-          </a>
-          <a href="#contact" className="hover:text-black transition">
-            Contact
-          </a>
+        <div className="flex flex-col lg:flex-row gap-3 md:gap-6 text-gray-800 justify-center items-center">
+            {navItems.map((item) => (
+                <a
+                key={item.label}
+                href={item.href}
+                className="hover:text-gray-400 transition font-semi-bold"
+                >
+                {item.label}
+                </a>
+            ))}
         </div>
 
         {/* Right section */}

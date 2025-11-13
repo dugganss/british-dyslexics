@@ -1,31 +1,30 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import Logo from "./Logo";
 import { ShoppingCart, Menu, X } from "lucide-react";
+import { navItems } from "@/app/config/navigation";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
-
-  const navItems = ["Learn", "Support", "About", "Contact"];
 
   return (
     <nav className="flex justify-between items-center px-6 py-4 absolute top-0 left-0 w-full z-30 bg-gradient-to-b from-white to-transparent">
       {/* Logo */}
       <div className="flex items-end gap-3 max-[420px]:gap-2">
-        <Image src="/logo.png" alt="British Dyslexics Logo" width={44} height={44} />
+        <Logo></Logo>
         <h1 className="text-2xl font-bold text-black max-[420px]:text-xl">British Dyslexics</h1>
       </div>
 
       {/* Desktop Navigation */}
-      <div className="hidden min-[856px]:flex gap-18 text-black font-semi-bold text-xl mt-3">
+      <div className="hidden min-[856px]:flex gap-18 text-black font-semi-bold text-lg mt-3">
         {navItems.map((item) => (
           <a
-            key={item}
-            href={`#${item.toLowerCase().replace(/\s+/g, '-')}`}
-            className="hover:text-gray-700 transition-colors"
+            key={item.label}
+            href={item.href}
+            className="hover:text-gray-600 transition-colors"
           >
-            {item}
+            {item.label}
           </a>
         ))}
       </div>
@@ -55,12 +54,12 @@ export default function Header() {
           </button>
           {navItems.map((item) => (
             <a
-              key={item}
-              href={`#${item.toLowerCase().replace(/\s+/g, '-')}`}
+              key={item.label}
+              href={item.href}
               onClick={() => setMenuOpen(false)}
               className="hover:text-gray-600 transition-colors"
             >
-              {item}
+              {item.label}
             </a>
           ))}
         </div>
@@ -68,22 +67,3 @@ export default function Header() {
     </nav>
   );
 }
-
-// import Image from "next/image";
-// import { ShoppingCart, Menu } from "lucide-react";
-
-// export default function Header () {
-// return (
-//     <nav className="flex justify-between items-center px-6 py-4 absolute top-0 left-0 w-full z-30 bg-gradient-to-b from-white to-transparent">
-//         <div className="flex items-end gap-3 max-[420px]:gap-2">
-//           <Image src="/logo.png" alt="British Dyslexics Logo" width={44} height={44} />
-//           <h1 className="text-2xl font-bold text-black max-[420px]:text-xl">British Dyslexics</h1>
-//         </div>
-
-//         <div className="flex items-center gap-4 max-[420px]:gap-3 cursor-pointer text-black">
-//           <Menu className="mt-2 w-8 h-8 max-[420px]:w-6 max-[420px]:h-6" />
-//           <ShoppingCart className="mt-2 w-8 h-8 max-[420px]:w-6 max-[420px]:h-6" />
-//         </div>
-//     </nav>
-// );
-// }
