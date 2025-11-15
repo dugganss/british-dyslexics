@@ -4,28 +4,28 @@ import { useState } from "react";
 export default function ResourcesBox() {
   const tabs = [
     {
-      id: "guides",
-      label: "Guides",
+      id: "learn",
+      label: "Learn More",
       content:
-        "Access step-by-step guides for supporting dyslexia in education, the workplace, and at home.",
+        "Access materials discussing us and our mission.",
     },
     {
-      id: "support",
-      label: "Support",
+      id: "free",
+      label: "Free Access",
       content:
-        "Find information on support networks, mentoring, and local dyslexia-friendly organisations.",
+        "Access free learning, training and advice materials all collated by Roy Fielding."
     },
     {
-      id: "training",
-      label: "Training",
+      id: "book",
+      label: "Purchase Book",
       content:
-        "Explore online and in-person training for teachers, employers, and parents to understand dyslexia better.",
+        "Support the charity and learn more about Dyslexia by purchasing the book 'DYSLEXIA Recognising the condition and getting help' by Roy Fielding.",
     },
     {
       id: "community",
-      label: "Community",
+      label: "Make Requests",
       content:
-        "Join our nationwide community to connect with others, share experiences, and stay informed on events.",
+        "Make requests for fundraising ideas or reach out for direct support.",
     },
   ];
 
